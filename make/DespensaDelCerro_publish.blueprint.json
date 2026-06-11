@@ -1,0 +1,149 @@
+{
+  "name": "Despensa del Cerro — publicar (mínimo)",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "parameters": {
+        "maxResults": 1
+      },
+      "mapper": {},
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        },
+        "restore": {
+          "parameters": {
+            "hook": {
+              "data": {
+                "editable": "true"
+              },
+              "label": "DespensaDelCerro"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "hook",
+            "type": "hook:gateway-webhook",
+            "label": "Webhook",
+            "required": true
+          },
+          {
+            "name": "maxResults",
+            "type": "number",
+            "label": "Maximum number of results"
+          }
+        ],
+        "interface": [
+          {
+            "name": "image_url",
+            "type": "url"
+          },
+          {
+            "name": "caption",
+            "type": "text"
+          },
+          {
+            "name": "comentario",
+            "type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "id": 34,
+      "module": "instagram-business:CreatePostPhoto",
+      "version": 1,
+      "parameters": {
+        "__IMTCONN__": ""
+      },
+      "mapper": {
+        "caption": "{{1.caption}}",
+        "accountId": "",
+        "image_url": "{{1.image_url}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        },
+        "restore": {
+          "expect": {
+            "accountId": {
+              "mode": "chose"
+            },
+            "user_tags": {
+              "mode": "chose"
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "facebook"
+              },
+              "label": "Conectar tu Facebook/Instagram de Despensa del Cerro"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:facebook",
+            "label": "Connection",
+            "required": true
+          }
+        ],
+        "expect": [
+          {
+            "name": "accountId",
+            "type": "select",
+            "label": "Page",
+            "required": true
+          },
+          {
+            "name": "image_url",
+            "type": "url",
+            "label": "Photo URL",
+            "required": true
+          },
+          {
+            "name": "caption",
+            "type": "text",
+            "label": "Caption"
+          }
+        ],
+        "interface": [
+          {
+            "name": "id",
+            "type": "text",
+            "label": "Post ID"
+          }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "slots": null,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "us1.make.com"
+  }
+}

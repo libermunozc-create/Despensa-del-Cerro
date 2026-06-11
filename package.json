@@ -1,0 +1,25 @@
+{
+  "name": "despensa-del-cerro-bot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Bot de Telegram que publica posts de Instagram para Despensa del Cerro (OpenAI + make.com, sobre Vercel).",
+  "scripts": {
+    "set-webhook": "tsx scripts/set-webhook.ts",
+    "delete-webhook": "tsx scripts/delete-webhook.ts",
+    "webhook-info": "tsx scripts/webhook-info.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@upstash/redis": "^1.34.3",
+    "@vercel/blob": "^0.27.1",
+    "openai": "^4.77.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@vercel/node": "^5.0.0",
+    "dotenv": "^16.4.7",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
