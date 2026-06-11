@@ -107,7 +107,9 @@ async function handleMessage(msg: any): Promise<void> {
 /** Mensaje de error con la causa de fondo incluida (p. ej. el motivo real de un "Connection error."). */
 function describirError(e: any): string {
   const msg = e?.message ?? String(e);
-  const causa = e?.cause?.message ?? e?.cause?.code;
+  let causa: string = e?.cause?.message ?? e?.cause?.code ?? '';
+  // Nunca mandar secretos al chat: las causas de headers inválidos incluyen el valor completo.
+  causa = causa.replace(/sk-[A-Za-z0-9_-]+/g, 'sk-***');
   return causa ? `${msg} (causa: ${causa})` : msg;
 }
 
