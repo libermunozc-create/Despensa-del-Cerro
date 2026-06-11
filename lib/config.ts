@@ -1,11 +1,15 @@
 // Configuración central: lee variables de entorno y la lista de autorizados.
 
-export const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN ?? '';
-export const TELEGRAM_WEBHOOK_SECRET = process.env.TELEGRAM_WEBHOOK_SECRET ?? '';
-export const MAKE_WEBHOOK_URL = process.env.MAKE_WEBHOOK_URL ?? '';
-export const OPENAI_API_KEY = process.env.OPENAI_API_KEY ?? '';
-export const OPENAI_TEXT_MODEL = process.env.OPENAI_TEXT_MODEL ?? 'gpt-4o-mini';
-export const OPENAI_IMAGE_MODEL = process.env.OPENAI_IMAGE_MODEL ?? 'gpt-image-1';
+// trim(): un espacio o salto de línea pegado por accidente en el panel de Vercel
+// rompe los headers HTTP con errores crípticos ("Connection error.").
+const env = (k: string): string => (process.env[k] ?? '').trim();
+
+export const TELEGRAM_BOT_TOKEN = env('TELEGRAM_BOT_TOKEN');
+export const TELEGRAM_WEBHOOK_SECRET = env('TELEGRAM_WEBHOOK_SECRET');
+export const MAKE_WEBHOOK_URL = env('MAKE_WEBHOOK_URL');
+export const OPENAI_API_KEY = env('OPENAI_API_KEY');
+export const OPENAI_TEXT_MODEL = env('OPENAI_TEXT_MODEL') || 'gpt-4o-mini';
+export const OPENAI_IMAGE_MODEL = env('OPENAI_IMAGE_MODEL') || 'gpt-image-1';
 
 const ALLOWED = (process.env.ALLOWED_TELEGRAM_IDS ?? '')
   .split(',')

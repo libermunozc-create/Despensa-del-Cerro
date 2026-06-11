@@ -100,8 +100,15 @@ async function handleMessage(msg: any): Promise<void> {
     await prepararDraft(chatId, null, text, true);
   } catch (e: any) {
     console.error(e);
-    await sendMessage(chatId, `⚠️ Algo falló: ${e?.message ?? e}`);
+    await sendMessage(chatId, `⚠️ Algo falló: ${describirError(e)}`);
   }
+}
+
+/** Mensaje de error con la causa de fondo incluida (p. ej. el motivo real de un "Connection error."). */
+function describirError(e: any): string {
+  const msg = e?.message ?? String(e);
+  const causa = e?.cause?.message ?? e?.cause?.code;
+  return causa ? `${msg} (causa: ${causa})` : msg;
 }
 
 /** Genera (o usa) la imagen + caption, guarda el borrador y manda la vista previa. */
@@ -184,6 +191,6 @@ async function handleCallback(cq: any): Promise<void> {
     }
   } catch (e: any) {
     console.error(e);
-    await sendMessage(chatId, `⚠️ No pude completar la acción: ${e?.message ?? e}`);
+    await sendMessage(chatId, `⚠️ No pude completar la acción: ${describirError(e)}`);
   }
 }
